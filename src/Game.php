@@ -6,11 +6,11 @@ class Game
 {
     private $game;
 
-    const GAMES = ['brain-even', 'brain-calc', 'brain-gcd', 'brain-progression', 'brain-prime'];
+    private const GAMES = ['brain-even', 'brain-calc', 'brain-gcd', 'brain-progression', 'brain-prime'];
 
     public function __construct($game)
     {
-        if(!in_array($game, self::GAMES)){
+        if (!in_array($game, self::GAMES)) {
             throw new \Exception('Unknown game');
         }
         $this->game = $game;
@@ -34,7 +34,8 @@ class Game
         throw new \Exception('Unknown game');
     }
 
-    public function getLine(): string{
+    public function getLine(): string
+    {
         switch ($this->game) {
             case 'brain-even':
                 return 'Answer "yes" if the number is even, otherwise answer "no".';
@@ -66,7 +67,8 @@ class Game
 
     public function progressionQuestions(): array
     {
-        return ['5 7 9 11 13 .. 17 19 21 23' => '15', '2 5 8 .. 14 17 20 23 26 29' => '11', '14 19 24 29 34 39 44 49 54 ..' => '59'];
+        return ['5 7 9 11 13 .. 17 19 21 23' => '15',
+        '2 5 8 .. 14 17 20 23 26 29' => '11', '14 19 24 29 34 39 44 49 54 ..' => '59'];
     }
 
     public function primeQuestions(): array

@@ -9,7 +9,10 @@ use function cli\prompt;
 
 class Cli
 {
-    private $name, $game, $questions, $initLine;
+    private $name;
+    private $game;
+    private $questions;
+    private $initLine;
 
     public function __construct($game = null)
     {

@@ -28,3 +28,6 @@ autoload:
 
 lint:
 	composer exec --verbose phpcs -- --standard=PSR12 src bin
+
+fix:
+	composer exec phpcbf -- --standard=PSR12 src bin
