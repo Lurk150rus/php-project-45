@@ -49,7 +49,7 @@ function askAnswer(string $question, string $correctAnswer): bool
     line('Question: ' . $question);
     $answer = prompt('Your answer');
 
-    if ($answer != $correctAnswer) {
+    if ($answer !== $correctAnswer) {
         line(sprintf("'%s' is wrong answer ;(.", $answer));
         line(sprintf("Correct answer was '%s'.", $correctAnswer));
         return false;

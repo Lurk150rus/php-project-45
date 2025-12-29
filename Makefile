@@ -32,3 +32,6 @@ lint:
 
 lint-fix:
 	composer exec --verbose phpcbf -- src src bin
+
+stan-lint:
+	composer exec -v phpstan analyse -- -c phpstan.neon --ansi src bin

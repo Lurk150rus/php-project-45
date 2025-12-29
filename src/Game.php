@@ -74,7 +74,7 @@ function getLine(string $game): string
  * @param string $game Game identifier
  *
  * @throws \InvalidArgumentException When game is unknown
- * @return array<string,string>
+ * @return array
  */
 function createQuestions(string $game): array
 {
@@ -95,7 +95,7 @@ function createQuestions(string $game): array
 /**
  * Even questions generator (pure).
  *
- * @return array<string,string>
+ * @return array<int,string>
  */
 function evenQuestions(): array
 {
@@ -125,7 +125,7 @@ function gcdQuestions(): array
 /**
  * Progression questions generator (pure).
  *
- * @return array<string,string>
+ * @return array<string, string>
  */
 function progressionQuestions(): array
 {
@@ -139,7 +139,7 @@ function progressionQuestions(): array
 /**
  * Prime questions generator (pure).
  *
- * @return array<string,string>
+ * @return array<int,string>
  */
 function primeQuestions(): array
 {
