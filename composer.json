@@ -5,11 +5,13 @@
     "type": "project",
     "autoload": {
         "psr-4": {
-            "Hexlet\\Code\\": "bin/"
+            "Hexlet\\Code\\": "src/"
         }
     },
-    "require": {},
+    "require": {
+        "wp-cli/php-cli-tools": "^0.12.6"
+    },
     "bin": [
-    "bin/brain-games"
+        "bin/brain-games"
     ]
 }
