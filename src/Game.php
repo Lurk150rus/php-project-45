@@ -3,7 +3,7 @@
 /**
  * File: Game.php
  *
- * Contains the Game class for brain games.
+ * Functional API for game logic and question generators.
  *
  * @category Game
  * @package  Hexlet\Code
@@ -16,153 +16,132 @@
 namespace Hexlet\Code;
 
 /**
- * Game logic and question generators.
+ * List of supported games.
  *
- * @category Game
- * @package  Hexlet\Code
- * @author   Kirill <unknownsomebody@ya.ru>
- * @license  MIT https://opensource.org/licenses/MIT
- * @link     https://github.com/Lurk150rus/php-project-45/
- * @since    PHP 8
+ * @var array
  */
-class Game
+const GAMES = [
+    'brain-even',
+    'brain-calc',
+    'brain-gcd',
+    'brain-progression',
+    'brain-prime',
+];
+
+/**
+ * Validate game name.
+ *
+ * @param string $game Game identifier
+ *
+ * @return bool
+ */
+function is_valid_game(string $game): bool
 {
-    /**
-     * Summary of game
-     *
-     * @var string
-     */
-    protected string $game;
+    return in_array($game, GAMES, true);
+}
 
-    /**
-     * Summary of GAMES
-     *
-     * @var array
-     */
-    protected const GAMES = [
-        'brain-even',
-        'brain-calc',
-        'brain-gcd',
-        'brain-progression',
-        'brain-prime'
+/**
+ * Return description / question prompt for the given game.
+ *
+ * Pure function — no side effects.
+ *
+ * @param string $game Game identifier
+ *
+ * @throws \InvalidArgumentException When game is unknown
+ * @return string
+ */
+function get_line(string $game): string
+{
+    if (!is_valid_game($game)) {
+        throw new \InvalidArgumentException('Unknown game: ' . $game);
+    }
+
+    return match ($game) {
+        'brain-even' => 'Answer "yes" if the number is even, otherwise answer "no".',
+        'brain-calc' => 'What is the result of the expression?',
+        'brain-gcd' => 'Find the greatest common divisor of given numbers.',
+        'brain-progression' => 'What number is missing in the progression?',
+        'brain-prime' => 'Answer "yes" if given number is prime. Otherwise answer "no".',
+        default => throw new \InvalidArgumentException('Unknown game: ' . $game),
+    };
+}
+
+/**
+ * Return questions for the given game.
+ *
+ * Pure function — no side effects.
+ *
+ * @param string $game Game identifier
+ *
+ * @throws \InvalidArgumentException When game is unknown
+ * @return array<string,string>
+ */
+function create_questions(string $game): array
+{
+    if (!is_valid_game($game)) {
+        throw new \InvalidArgumentException('Unknown game: ' . $game);
+    }
+
+    return match ($game) {
+        'brain-even' => even_questions(),
+        'brain-calc' => calc_questions(),
+        'brain-gcd' => gcd_questions(),
+        'brain-progression' => progression_questions(),
+        'brain-prime' => prime_questions(),
+        default => throw new \InvalidArgumentException('Unknown game: ' . $game),
+    };
+}
+
+/**
+ * Even questions generator (pure).
+ *
+ * @return array<string,string>
+ */
+function even_questions(): array
+{
+    return ['15' => 'no', '6' => 'yes', '7' => 'no'];
+}
+
+/**
+ * Calc questions generator (pure).
+ *
+ * @return array<string,string>
+ */
+function calc_questions(): array
+{
+    return ['4 + 10' => '14', '25 - 11' => '14', '25 * 7' => '175'];
+}
+
+/**
+ * GCD questions generator (pure).
+ *
+ * @return array<string,string>
+ */
+function gcd_questions(): array
+{
+    return ['25 50' => '25', '100 52' => '4', '3 9' => '3'];
+}
+
+/**
+ * Progression questions generator (pure).
+ *
+ * @return array<string,string>
+ */
+function progression_questions(): array
+{
+    return [
+        '5 7 9 11 13 .. 17 19 21 23' => '15',
+        '2 5 8 .. 14 17 20 23 26 29' => '11',
+        '14 19 24 29 34 39 44 49 54 ..' => '59',
     ];
+}
 
-    /**
-     * Summary of __construct
-     *
-     * @param string $game - game name
-     *
-     * @throws \Exception
-     */
-    public function __construct(string $game)
-    {
-        if (!in_array($game, self::GAMES)) {
-            throw new \Exception('Unknown game');
-        }
-        $this->game = $game;
-    }
-
-    /**
-     * Summary of createQuestions
-     *
-     * @throws \Exception
-     * @return array
-     */
-    public function createQuestions(): array
-    {
-        switch ($this->game) {
-            case 'brain-even':
-                return $this->evenQuestions();
-            case 'brain-calc':
-                return $this->calcQuestions();
-            case 'brain-gcd':
-                return $this->gcdQuestions();
-            case 'brain-progression':
-                return $this->progressionQuestions();
-            case 'brain-prime':
-                return $this->primeQuestions();
-        }
-
-        throw new \Exception('Unknown game');
-    }
-
-    /**
-     * Summary of getLine
-     *
-     * @throws \Exception
-     * @return string
-     */
-    public function getLine(): string
-    {
-        switch ($this->game) {
-            case 'brain-even':
-                return 'Answer "yes" if the number is even, otherwise answer "no".';
-            case 'brain-calc':
-                return 'What is the result of the expression?';
-            case 'brain-gcd':
-                return 'Find the greatest common divisor of given numbers.';
-            case 'brain-progression':
-                return 'What number is missing in the progression?';
-            case 'brain-prime':
-                return 'Answer "yes" if given number is prime. Otherwise answer "no".';
-        }
-
-        throw new \Exception('Unknown game');
-    }
-
-    /**
-     * Summary of evenQuestions
-     *
-     * @return string[]
-     */
-    public function evenQuestions(): array
-    {
-        return [15 => 'no', 6 => 'yes', 7 => 'no'];
-    }
-
-    /**
-     * Summary of calcQuestions
-     *
-     * @return array{25 * 7: int|string, 25 - 11: int|string, 4 + 10: int|string}
-     */
-    public function calcQuestions(): array
-    {
-        return ['4 + 10' => '14', '25 - 11' => '14', '25 * 7' => '175'];
-    }
-
-    /**
-     * Summary of gcdQuestions
-     *
-     * @return array{100 52: int|string, 25 50: int|string, 3 9: int|string}
-     */
-    public function gcdQuestions(): array
-    {
-        return ['25 50' => '25', '100 52' => '4', '3 9' => '3'];
-    }
-
-    /**
-     * Summary of progressionQuestions
-     *
-     * @return array{14 19 24 29 34 39 44 49 54 ..:
-     * int|string, 2 5 8 .. 14 17 20 23 26 29:
-     * int|string, 5 7 9 11 13 .. 17 19 21 23: int|string}
-     */
-    public function progressionQuestions(): array
-    {
-        return [
-            '5 7 9 11 13 .. 17 19 21 23' => '15',
-            '2 5 8 .. 14 17 20 23 26 29' => '11',
-            '14 19 24 29 34 39 44 49 54 ..' => '59'
-        ];
-    }
-
-    /**
-     * Summary of primeQuestions
-     *
-     * @return array{2: string, 3: string, 4: string}
-     */
-    public function primeQuestions(): array
-    {
-        return ['2' => 'yes', '3' => 'yes', '4' => 'no'];
-    }
+/**
+ * Prime questions generator (pure).
+ *
+ * @return array<string,string>
+ */
+function prime_questions(): array
+{
+    return ['2' => 'yes', '3' => 'yes', '4' => 'no'];
 }

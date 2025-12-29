@@ -3,7 +3,7 @@
 /**
  * File: Cli.php
  *
- * Contains the CLI class for Brain Games.
+ * Functional CLI helpers for Brain Games.
  *
  * @category Cli
  * @package  Hexlet\Code
@@ -15,123 +15,79 @@
 
 namespace Hexlet\Code;
 
-use Hexlet\Code\Game;
-
 use function cli\line;
 use function cli\prompt;
 
 /**
- * Summary of Cli
+ * Greet the user and return their name.
  *
- * @category Cli
- * @package  Hexlet\Code
- * @author   Kirill <unknownsomebody@ya.ru>
- * @license  MIT https://opensource.org/licenses/MIT
- * @link     https://github.com/Lurk150rus/php-project-45/
- * @since    PHP 8
+ * Side effect: prompts user.
+ *
+ * @return string User name
  */
-class Cli
+function greetings(): string
 {
-    /**
-     * Summary of name
-     *
-     * @var string
-     */
-    protected string $name;
-    /**
-     * Summary of game
-     *
-     * @var ?Game
-     */
-    protected ?Game $game;
-    /**
-     * Summary of questions
-     *
-     * @var array
-     */
-    protected array $questions;
-    /**
-     * Summary of initLine
-     *
-     * @var string
-     */
-    protected string $initLine;
+    line('Welcome to the Brain Games!');
+    $name = prompt('May I have your name?');
+    line("Hello, %s!", $name);
 
-    /**
-     * Initialize the CLI with optional game.
-     *
-     * @param string|null $game Game name to initialize, or null for none
-     */
-    public function __construct(?string $game = null)
-    {
-        $this->game = $game ? new Game($game) : null;
+    return $name;
+}
+
+/**
+ * Ask one question, print feedback and return whether it was correct.
+ *
+ * Side effects: uses prompt() and line().
+ *
+ * @param string $question      Question text
+ * @param string $correctAnswer Correct answer
+ *
+ * @return bool
+ */
+function ask_answer(string $question, string $correctAnswer): bool
+{
+    line('Question: ' . $question);
+    $answer = prompt('Your answer');
+
+    if ($answer != $correctAnswer) {
+        line(sprintf("'%s' is wrong answer ;(.", $answer));
+        line(sprintf("Correct answer was '%s'.", $correctAnswer));
+        return false;
     }
 
-    /**
-     * Summary of greetings
-     *
-     * @return void
-     */
-    public function greetings(): void
-    {
-        line('Welcome to the Brain Games!');
-        $this->name = prompt('May I have your name?');
+    line('Correct!');
+    return true;
+}
 
-        line("Hello, %s!", $this->name);
+/**
+ * Run the CLI flow for given game.
+ *
+ * @param string|null $gameName Game identifier or null to fail
+ *
+ * @throws \InvalidArgumentException
+ * @return void
+ */
+function run_cli(?string $gameName = null): void
+{
+    if ($gameName === null) {
+        throw new \InvalidArgumentException('Game name is required');
+    }
+    if (!is_valid_game($gameName)) {
+        throw new \InvalidArgumentException('Unknown game: ' . $gameName);
     }
 
-    /**
-     * Summary of start
-     *
-     * @return void
-     */
-    public function start(): void
-    {
-        $this->greetings();
-        $this->questions = $this->game->createQuestions();
-        $this->initLine = $this->game->getLine();
-        $this->play();
-    }
+    $name = greetings();
+    $questions = create_questions($gameName);
+    $initLine = get_line($gameName);
 
-    /**
-     * Summary of play
-     *
-     * @return void
-     */
-    public function play(): void
-    {
-        line($this->initLine);
-        foreach ($this->questions as $question => $correctAnswer) {
-            if (self::askAnswer($question, $correctAnswer) === false) {
-                line("Let's try again, %s!", $this->name);
-                return;
-            };
-        }
-
-        line('Congratulations, %s!', $this->name);
-    }
-
-    /**
-     * Ask the user a question and check the answer.
-     *
-     * @param mixed $question      The question to ask
-     * @param mixed $correctAnswer Correct answer to compare against
-     *
-     * @return bool True if answer is correct, false otherwise
-     */
-    protected function askAnswer($question, $correctAnswer): bool
-    {
-        line('Question: ' . $question);
-        $answer = prompt('Your answer');
-        if ($answer != $correctAnswer) {
-            line(
-                "'$answer' is wrong answer ;(. 
-            Correct answer was '$correctAnswer'."
-            );
-            return false;
-        } else {
-            line('Correct!');
-            return true;
+    line($initLine);
+    foreach ($questions as $question => $correctAnswer) {
+        $ok = ask_answer((string) $question, (string) $correctAnswer);
+        if ($ok === false) {
+            line("Let's try again, %s!", $name);
+            return;
         }
     }
+
+    line('Congratulations, %s!', $name);
 }
