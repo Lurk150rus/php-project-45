@@ -130,7 +130,14 @@ function calcQuestions(): array
         $operation = $operations[random_int(0, 2)];
 
         $key = "$operandFirst $operation $operandSecond";
-        $questions[$key] = eval("return ($key);");
+
+        $result = match ($operation) {
+            '+' => $operandFirst + $operandSecond,
+            '-' => $operandFirst - $operandSecond,
+            '*' => $operandFirst * $operandSecond,
+        };
+
+        $questions[$key] = (string) $result;
     }
 
     return $questions;
