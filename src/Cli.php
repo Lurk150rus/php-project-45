@@ -41,9 +41,9 @@ class Cli
     /**
      * Summary of game
      *
-     * @var Game
+     * @var ?Game
      */
-    private Game $_game;
+    private ?Game $_game;
     /**
      * Summary of questions
      *
