@@ -36,7 +36,7 @@ class Cli
         line($this->initLine);
         foreach ($this->questions as $question => $correctAnswer) {
             if (self::askAnswer($question, $correctAnswer) === false) {
-                line("Let's try again, %s", $this->name);
+                line("Let's try again, %s!", $this->name);
                 return;
             };
         }
