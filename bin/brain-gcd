@@ -1,0 +1,11 @@
+#! /usr/bin/env php
+<?php
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+$game_name = basename(__FILE__);
+
+$game = new \Hexlet\Code\Cli($game_name);
+
+$game->start();
+?>
