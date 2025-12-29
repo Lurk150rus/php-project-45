@@ -37,25 +37,25 @@ class Cli
      *
      * @var string
      */
-    private string $name;
+    protected string $name;
     /**
      * Summary of game
      *
      * @var ?Game
      */
-    private ?Game $game;
+    protected ?Game $game;
     /**
      * Summary of questions
      *
      * @var array
      */
-    private array $questions;
+    protected array $questions;
     /**
      * Summary of initLine
      *
      * @var string
      */
-    private string $initLine;
+    protected string $initLine;
 
     /**
      * Initialize the CLI with optional game.
@@ -119,7 +119,7 @@ class Cli
      *
      * @return bool True if answer is correct, false otherwise
      */
-    private function askAnswer($question, $correctAnswer): bool
+    protected function askAnswer($question, $correctAnswer): bool
     {
         line('Question: ' . $question);
         $answer = prompt('Your answer');

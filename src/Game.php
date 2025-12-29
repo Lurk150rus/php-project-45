@@ -32,14 +32,14 @@ class Game
      *
      * @var string
      */
-    private string $game;
+    protected string $game;
 
     /**
      * Summary of GAMES
      *
      * @var array
      */
-    private const GAMES = [
+    protected const GAMES = [
         'brain-even',
         'brain-calc',
         'brain-gcd',
