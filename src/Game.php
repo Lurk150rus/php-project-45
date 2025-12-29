@@ -29,6 +29,12 @@ const GAMES = [
 ];
 
 /**
+ * Summary of GAME_COUNT
+ * @var int
+ */
+const GAME_COUNT = 3;
+
+/**
  * Validate game name.
  *
  * @param string $game Game identifier
@@ -99,7 +105,12 @@ function createQuestions(string $game): array
  */
 function evenQuestions(): array
 {
-    return ['15' => 'no', '6' => 'yes', '7' => 'no'];
+    $questions = [];
+    for ($i = 0; $i < GAME_COUNT; $i++) {
+        $key = random_int(PHP_INT_MIN, PHP_INT_MAX);
+        $questions[$key] = $key % 2 === 0 ? 'yes' : 'no';
+    }
+    return $questions;
 }
 
 /**
@@ -109,7 +120,20 @@ function evenQuestions(): array
  */
 function calcQuestions(): array
 {
-    return ['4 + 10' => '14', '25 - 11' => '14', '25 * 7' => '175'];
+    $operations = ['+', '-', '*'];
+
+    $questions = [];
+
+    for ($i = 0; $i < GAME_COUNT; $i++) {
+        $operandFirst = random_int(PHP_INT_MIN, PHP_INT_MAX);
+        $operandSecond = random_int(PHP_INT_MIN, PHP_INT_MAX);
+        $operation = $operations[random_int(0, 2)];
+
+        $key = "$operandFirst $operation $operandSecond";
+        $questions[$key] = eval("return ($key);");
+    }
+
+    return $questions;
 }
 
 /**
