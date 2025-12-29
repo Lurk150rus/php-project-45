@@ -12,7 +12,8 @@
         "wp-cli/php-cli-tools": "^0.12.6"
     },
     "bin": [
-        "bin/brain-games"
+        "bin/brain-games",
+        "bin/brain-even"
     ],
     "require-dev": {
         "squizlabs/php_codesniffer": "^4.0"
