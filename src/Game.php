@@ -107,7 +107,7 @@ function evenQuestions(): array
 {
     $questions = [];
     for ($i = 0; $i < GAME_COUNT; $i++) {
-        $key = random_int(PHP_INT_MIN, PHP_INT_MAX);
+        $key = random_int(1, 3000);
         $questions[$key] = $key % 2 === 0 ? 'yes' : 'no';
     }
     return $questions;
@@ -125,8 +125,8 @@ function calcQuestions(): array
     $questions = [];
 
     for ($i = 0; $i < GAME_COUNT; $i++) {
-        $operandFirst = random_int(PHP_INT_MIN, PHP_INT_MAX);
-        $operandSecond = random_int(PHP_INT_MIN, PHP_INT_MAX);
+        $operandFirst = random_int(1, 3000);
+        $operandSecond = random_int(1, 3000);
         $operation = $operations[random_int(0, 2)];
 
         $key = "$operandFirst $operation $operandSecond";
