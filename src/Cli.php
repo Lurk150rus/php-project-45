@@ -44,7 +44,7 @@ function greetings(): string
  *
  * @return bool
  */
-function ask_answer(string $question, string $correctAnswer): bool
+function askAnswer(string $question, string $correctAnswer): bool
 {
     line('Question: ' . $question);
     $answer = prompt('Your answer');
@@ -67,22 +67,22 @@ function ask_answer(string $question, string $correctAnswer): bool
  * @throws \InvalidArgumentException
  * @return void
  */
-function run_cli(?string $gameName = null): void
+function runCli(?string $gameName = null): void
 {
     if ($gameName === null) {
         throw new \InvalidArgumentException('Game name is required');
     }
-    if (!is_valid_game($gameName)) {
+    if (!isValidGame($gameName)) {
         throw new \InvalidArgumentException('Unknown game: ' . $gameName);
     }
 
     $name = greetings();
-    $questions = create_questions($gameName);
-    $initLine = get_line($gameName);
+    $questions = createQuestions($gameName);
+    $initLine = getLine($gameName);
 
     line($initLine);
     foreach ($questions as $question => $correctAnswer) {
-        $ok = ask_answer((string) $question, (string) $correctAnswer);
+        $ok = askAnswer((string) $question, (string) $correctAnswer);
         if ($ok === false) {
             line("Let's try again, %s!", $name);
             return;

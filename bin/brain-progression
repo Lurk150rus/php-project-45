@@ -5,6 +5,6 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 $game_name = basename(__FILE__);
 
-\Hexlet\Code\run_cli($game_name);
+\Hexlet\Code\runCli($game_name);
 
 ?>

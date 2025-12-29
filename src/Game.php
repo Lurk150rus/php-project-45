@@ -35,7 +35,7 @@ const GAMES = [
  *
  * @return bool
  */
-function is_valid_game(string $game): bool
+function isValidGame(string $game): bool
 {
     return in_array($game, GAMES, true);
 }
@@ -50,9 +50,9 @@ function is_valid_game(string $game): bool
  * @throws \InvalidArgumentException When game is unknown
  * @return string
  */
-function get_line(string $game): string
+function getLine(string $game): string
 {
-    if (!is_valid_game($game)) {
+    if (!isValidGame($game)) {
         throw new \InvalidArgumentException('Unknown game: ' . $game);
     }
 
@@ -76,18 +76,18 @@ function get_line(string $game): string
  * @throws \InvalidArgumentException When game is unknown
  * @return array<string,string>
  */
-function create_questions(string $game): array
+function createQuestions(string $game): array
 {
-    if (!is_valid_game($game)) {
+    if (!isValidGame($game)) {
         throw new \InvalidArgumentException('Unknown game: ' . $game);
     }
 
     return match ($game) {
-        'brain-even' => even_questions(),
-        'brain-calc' => calc_questions(),
-        'brain-gcd' => gcd_questions(),
-        'brain-progression' => progression_questions(),
-        'brain-prime' => prime_questions(),
+        'brain-even' => evenQuestions(),
+        'brain-calc' => calcQuestions(),
+        'brain-gcd' => gcdQuestions(),
+        'brain-progression' => progressionQuestions(),
+        'brain-prime' => primeQuestions(),
         default => throw new \InvalidArgumentException('Unknown game: ' . $game),
     };
 }
@@ -97,7 +97,7 @@ function create_questions(string $game): array
  *
  * @return array<string,string>
  */
-function even_questions(): array
+function evenQuestions(): array
 {
     return ['15' => 'no', '6' => 'yes', '7' => 'no'];
 }
@@ -107,7 +107,7 @@ function even_questions(): array
  *
  * @return array<string,string>
  */
-function calc_questions(): array
+function calcQuestions(): array
 {
     return ['4 + 10' => '14', '25 - 11' => '14', '25 * 7' => '175'];
 }
@@ -117,7 +117,7 @@ function calc_questions(): array
  *
  * @return array<string,string>
  */
-function gcd_questions(): array
+function gcdQuestions(): array
 {
     return ['25 50' => '25', '100 52' => '4', '3 9' => '3'];
 }
@@ -127,7 +127,7 @@ function gcd_questions(): array
  *
  * @return array<string,string>
  */
-function progression_questions(): array
+function progressionQuestions(): array
 {
     return [
         '5 7 9 11 13 .. 17 19 21 23' => '15',
@@ -141,7 +141,7 @@ function progression_questions(): array
  *
  * @return array<string,string>
  */
-function prime_questions(): array
+function primeQuestions(): array
 {
     return ['2' => 'yes', '3' => 'yes', '4' => 'no'];
 }
