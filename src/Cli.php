@@ -17,7 +17,7 @@ class Cli
     }
     public function greetings()
     {
-        line('Welcome to the Brain Game!');
+        line('Welcome to the Brain Games!');
         $this->name = prompt('May I have your name?');
 
         line("Hello, %s!", $this->name);
