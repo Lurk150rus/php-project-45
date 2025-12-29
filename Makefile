@@ -27,7 +27,8 @@ autoload:
 	composer dump-autoload
 
 lint:
-	composer exec --verbose phpcs -- --standard=PEAR src bin
+	composer exec --verbose phpcs -- src src bin
+	composer exec --verbose phpstan
 
-fix:
-	composer exec phpcbf -- --standard=PEAR src bin
+lint-fix:
+	composer exec --verbose phpcbf -- src src bin

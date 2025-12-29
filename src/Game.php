@@ -32,7 +32,7 @@ class Game
      *
      * @var string
      */
-    private string $_game;
+    private string $game;
 
     /**
      * Summary of GAMES
@@ -51,7 +51,7 @@ class Game
      * Summary of __construct
      *
      * @param string $game - game name
-     * 
+     *
      * @throws \Exception
      */
     public function __construct(string $game)
@@ -59,7 +59,7 @@ class Game
         if (!in_array($game, self::GAMES)) {
             throw new \Exception('Unknown game');
         }
-        $this->_game = $game;
+        $this->game = $game;
     }
 
     /**
@@ -70,17 +70,17 @@ class Game
      */
     public function createQuestions(): array
     {
-        switch ($this->_game) {
-        case 'brain-even':
-            return $this->evenQuestions();
-        case 'brain-calc':
-            return $this->calcQuestions();
-        case 'brain-gcd':
-            return $this->gcdQuestions();
-        case 'brain-progression':
-            return $this->progressionQuestions();
-        case 'brain-prime':
-            return $this->primeQuestions();
+        switch ($this->game) {
+            case 'brain-even':
+                return $this->evenQuestions();
+            case 'brain-calc':
+                return $this->calcQuestions();
+            case 'brain-gcd':
+                return $this->gcdQuestions();
+            case 'brain-progression':
+                return $this->progressionQuestions();
+            case 'brain-prime':
+                return $this->primeQuestions();
         }
 
         throw new \Exception('Unknown game');
@@ -94,17 +94,17 @@ class Game
      */
     public function getLine(): string
     {
-        switch ($this->_game) {
-        case 'brain-even':
-            return 'Answer "yes" if the number is even, otherwise answer "no".';
-        case 'brain-calc':
-            return 'What is the result of the expression?';
-        case 'brain-gcd':
-            return 'Find the greatest common divisor of given numbers.';
-        case 'brain-progression':
-            return 'What number is missing in the progression?';
-        case 'brain-prime':
-            return 'Answer "yes" if given number is prime. Otherwise answer "no".';
+        switch ($this->game) {
+            case 'brain-even':
+                return 'Answer "yes" if the number is even, otherwise answer "no".';
+            case 'brain-calc':
+                return 'What is the result of the expression?';
+            case 'brain-gcd':
+                return 'Find the greatest common divisor of given numbers.';
+            case 'brain-progression':
+                return 'What number is missing in the progression?';
+            case 'brain-prime':
+                return 'Answer "yes" if given number is prime. Otherwise answer "no".';
         }
 
         throw new \Exception('Unknown game');
@@ -143,8 +143,8 @@ class Game
     /**
      * Summary of progressionQuestions
      *
-     * @return array{14 19 24 29 34 39 44 49 54 ..: 
-     * int|string, 2 5 8 .. 14 17 20 23 26 29: 
+     * @return array{14 19 24 29 34 39 44 49 54 ..:
+     * int|string, 2 5 8 .. 14 17 20 23 26 29:
      * int|string, 5 7 9 11 13 .. 17 19 21 23: int|string}
      */
     public function progressionQuestions(): array
