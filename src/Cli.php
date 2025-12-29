@@ -2,28 +2,40 @@
 
 namespace Hexlet\Code;
 
+use Hexlet\Code\Game;
+
 use function cli\line;
 use function cli\prompt;
 
 class Cli
 {
-    const ANSWERS = ['yes', 'no'];
-    const NUMBERS = [15, 6, 7];
+    private $name, $game, $questions, $initLine;
 
-    private $name;
+    public function __construct($game = null)
+    {
+        $this->game = $game ? new Game($game) : null;
+    }
     public function greetings()
     {
         line('Welcome to the Brain Game!');
         $this->name = prompt('May I have your name?');
-        
+
         line("Hello, %s!", $this->name);
     }
 
-    public function evenGame()
+    public function start()
     {
-        line('Answer "yes" if the number is even, otherwise answer "no".');
-        foreach (self::NUMBERS as $number) {
-            if (self::askAnswer($number) === false) {
+        $this->greetings();
+        $this->questions = $this->game->createQuestions();
+        $this->initLine = $this->game->getLine();
+        $this->play();
+    }
+
+    public function play()
+    {
+        line($this->initLine);
+        foreach ($this->questions as $question => $correctAnswer) {
+            if (self::askAnswer($question, $correctAnswer) === false) {
                 line("Let's try again, %s", $this->name);
                 return;
             };
@@ -32,13 +44,11 @@ class Cli
         return line('Congratulations, %s', $this->name);
     }
 
-    private function askAnswer($number)
+    private function askAnswer($question, $correctAnswer)
     {
-        $correctAnswer = $number % 2 === 0 ? 'yes' : 'no';
-
-        line('Question: ' . $number);
+        line('Question: ' . $question);
         $answer = prompt('Your answer');
-        if ($answer !== $correctAnswer) {
+        if ($answer != $correctAnswer) {
             line("'$answer' is wrong answer ;(. Correct answer was '$correctAnswer'.");
             return false;
         } else {
