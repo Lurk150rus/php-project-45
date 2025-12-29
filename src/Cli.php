@@ -41,7 +41,7 @@ class Cli
             };
         }
 
-        return line('Congratulations, %s', $this->name);
+        return line('Congratulations, %s!', $this->name);
     }
 
     private function askAnswer($question, $correctAnswer)

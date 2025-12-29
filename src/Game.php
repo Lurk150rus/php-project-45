@@ -6,7 +6,7 @@ class Game
 {
     private $game;
 
-    const GAMES = ['brain-even', 'brain-calc', 'brain-gcd'];
+    const GAMES = ['brain-even', 'brain-calc', 'brain-gcd', 'brain-progression'];
 
     public function __construct($game)
     {
@@ -25,6 +25,8 @@ class Game
                 return $this->calcQuestions();
             case 'brain-gcd':
                 return $this->gcdQuestions();
+            case 'brain-progression':
+                return $this->progressionQuestions();
         }
 
         throw new \Exception('Unknown game');
@@ -38,6 +40,8 @@ class Game
                 return 'What is the result of the expression?';
             case 'brain-gcd':
                 return 'Find the greatest common divisor of given numbers.';
+            case 'brain-progression':
+                return 'What number is missing in the progression?';
         }
 
         throw new \Exception('Unknown game');
@@ -54,5 +58,10 @@ class Game
     public function gcdQuestions(): array
     {
         return ['25 50' => '25', '100 52' => '4', '3 9' => '3'];
+    }
+
+    public function progressionQuestions(): array
+    {
+        return ['5 7 9 11 13 .. 17 19 21 23' => '15', '2 5 8 .. 14 17 20 23 26 29' => '11', '14 19 24 29 34 39 44 49 54 ..' => '59'];
     }
 }
